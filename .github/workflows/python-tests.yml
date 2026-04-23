@@ -1,11 +1,9 @@
-# Prueba 5 
-
 name: Selenium Tests
-on: [push, pull_request] # Se activa al subir código o crear un PR
+on: [push, pull_request]
 
 jobs:
   test:
-    runs-on: ubuntu-latest # Usamos Linux en la nube
+    runs-on: ubuntu-latest
     steps:
       - name: Descargar código del repositorio
         uses: actions/checkout@v4
@@ -20,21 +18,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Instalar Pantalla Virtual (Xvfb)
+      - name: Ejecutar pruebas de Selenium
         run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-
-      - name: Ejecutar pruebas con Monitor Virtual
-        run: |
-          # 1. Creamos la carpeta de reportes para evitar el FileNotFoundError
-          mkdir -p reports
-          
-          # 2. Usamos xvfb-run para engañar a Chrome simulando una pantalla
-          xvfb-run pytest --html=reporte_final.html --self-contained-html
+          pytest --html=reporte_final.html --self-contained-html
 
       - name: Guardar el Reporte HTML como evidencia
-        if: always() # Se ejecuta aunque fallen las pruebas
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: reporte-selenium

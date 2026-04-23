@@ -5,17 +5,20 @@ from selenium import webdriver
 @pytest.fixture 
 def driver():
     """Fixture del navegador""" 
+    
+    options = Options()
+    options.add_argument("--headless") # Ejecución sin ventana
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=options)
+    
     driver = webdriver.Chrome()
     driver.maximize_window()
     yield driver 
     driver.quit()
     
     # Parte de automatizacion en github
-    options = Options()
-    options.add_argument("--headless") # Ejecución sin ventana
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(options=options)
+    
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):

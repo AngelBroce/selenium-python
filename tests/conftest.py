@@ -11,9 +11,10 @@ def driver():
     """Inicializa y devuelve una instancia limpia de Chrome para cada test."""
     
     options = Options()
-    options.add_argument("--headless") # Ejecución sin ventana
+    options.add_argument("--headless") # Ejecución sin ventana (obligatorio para GitHub)
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=options)
     
     driver = webdriver.Chrome()

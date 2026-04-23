@@ -6,10 +6,10 @@ jobs:
     runs-on: ubuntu-latest # Usamos Linux en la nube
     steps:
       - name: Descargar código del repositorio
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Actualizado de v3 a v4
 
       - name: Configurar Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Actualizado de v4 a v5
         with:
           python-version: '3.9'
 
@@ -26,7 +26,7 @@ jobs:
 
       - name: Guardar el Reporte HTML como evidencia
         if: always() # Se ejecuta aunque fallen las pruebas
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # ¡Solución al error! Actualizado a v4
         with:
           name: reporte-selenium
           path: reporte_final.html

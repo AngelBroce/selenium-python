@@ -1,37 +1,39 @@
 import pytest
 import pytest_html
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
-@pytest.fixture 
+# Fixture del navegador
+@pytest.fixture
 def driver():
-    """Fixture del navegador""" 
-    
     options = Options()
-    options.add_argument("--headless") # Ejecución sin ventana (obligatorio para GitHub)
+    options.add_argument("--headless=new")  # necesario para GitHub Actions
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
-    
-    driver = webdriver.Chrome()
-    yield driver 
-    driver.quit()
-    
-    # Parte de automatizacion en github
-    
 
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+
+    driver.implicitly_wait(10)
+    yield driver
+    driver.quit()
+
+
+# Hook para capturas en fallos
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    """Captura de pantalla automática en caso de fallo""" 
     outcome = yield
-    report = outcome.get_result() 
-    extras = getattr(report, "extras", [])
+    report = outcome.get_result()
 
-    if report.when == "call" and report.failed: 
-        # Acceder al driver desde la fixture 
-        driver = item.funcargs['driver']
-        # Convertir la captura a base64 para el reporte HTML 
-        screenshot = driver.get_screenshot_as_base64()
-        html = f'<div><img src="data:image/png;base64,{screenshot}" alt="screenshot" style="width:304px;height:228px;" onclick="window.open(this.src)" align="right"/></div>'
-        extras.append(pytest_html.extras.html(html))   
-    report.extras = extras
+    if report.when == "call" and report.failed:
+        driver = item.funcargs.get("driver", None)
+
+        if driver:
+            screenshot = driver.get_screenshot_as_base64()
+            html = f'<div><img src="data:image/png;base64,{screenshot}" style="width:300px;" onclick="window.open(this.src)" /></div>'
+
+            extra = getattr(report, "extra", [])
+            extra.append(pytest_html.extras.html(html))
+            report.extra = extra

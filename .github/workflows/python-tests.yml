@@ -1,3 +1,5 @@
+# Prueba 5 
+
 name: Selenium Tests
 on: [push, pull_request] # Se activa al subir código o crear un PR
 
@@ -6,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest # Usamos Linux en la nube
     steps:
       - name: Descargar código del repositorio
-        uses: actions/checkout@v4 # Actualizado de v3 a v4
+        uses: actions/checkout@v4
 
       - name: Configurar Python
-        uses: actions/setup-python@v5 # Actualizado de v4 a v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
@@ -18,17 +20,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Ejecutar pruebas en modo Headless (sin ventana visible)
+      - name: Instalar Pantalla Virtual (Xvfb)
         run: |
-          # Importante: En servidores CI no hay pantalla física, 
-          # las pruebas deben correr en modo 'headless'
+          sudo apt-get update
+          sudo apt-get install -y xvfb
 
+      - name: Ejecutar pruebas con Monitor Virtual
+        run: |
+          # 1. Creamos la carpeta de reportes para evitar el FileNotFoundError
           mkdir -p reports
-          pytest --html=reporte_final.html --self-contained-html
+          
+          # 2. Usamos xvfb-run para engañar a Chrome simulando una pantalla
+          xvfb-run pytest --html=reporte_final.html --self-contained-html
 
       - name: Guardar el Reporte HTML como evidencia
         if: always() # Se ejecuta aunque fallen las pruebas
-        uses: actions/upload-artifact@v4 # ¡Solución al error! Actualizado a v4
+        uses: actions/upload-artifact@v4
         with:
           name: reporte-selenium
           path: reporte_final.html

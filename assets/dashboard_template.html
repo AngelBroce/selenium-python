@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinical Authority | Project Alpha Dashboard</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Separated CSS and JS Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="../assets/tailwind_config.js" id="tailwind-config"></script>
+<link href="../assets/dashboard_theme.css" rel="stylesheet"/>
+</head>
+<body class="text-on-background">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-full flex flex-col z-50 h-screen w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 font-inter text-sm transition-all duration-200 ease-in-out">
+<div class="px-6 py-8">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">precision_manufacturing</span>
+</div>
+<span class="text-lg font-black text-blue-900">Project Alpha</span>
+</div>
+<p class="text-xs text-on-surface-variant/70 pl-11">V2.4.0-Stable</p>
+</div>
+<nav class="flex-1 px-4 space-y-1 overflow-y-auto no-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-100/50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-bold border-r-4 border-blue-700 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+</nav>
+<div class="px-4 py-6 space-y-4">
+    <!-- Componentes inferiores del panel (Botón eliminado a petición del usuario) -->
+</div>
+</aside>
+
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar Component -->
+<header class="sticky top-0 w-full z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm dark:shadow-none flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-8">
+<h1 class="text-xl font-bold text-blue-900 dark:text-blue-100 font-headline">Clinical Authority</h1>
+<nav class="hidden md:flex items-center gap-6 font-manrope font-semibold">
+<a class="text-slate-500 hover:text-blue-600 transition-colors" href="#">Reports</a>
+<a class="text-blue-800 border-b-2 border-blue-800" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 text-slate-500">
+<button class="material-symbols-outlined hover:text-primary transition-colors">notifications</button>
+</div>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-slate-200 flex items-center justify-center">
+    <span class="material-symbols-outlined font-bold text-slate-400" >person</span>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 space-y-8">
+<!-- Page Header Section -->
+<section class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-2xl font-extrabold font-headline tracking-tight text-on-surface">Project Alpha - QA Test Report</h2>
+<p class="text-on-surface-variant text-sm">Comprehensive execution metrics powered by Selenium E2E Automation.</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 bg-surface-container-lowest p-2 rounded-xl border border-outline-variant/30 shadow-sm">
+<span class="material-symbols-outlined text-on-surface-variant ml-2">calendar_today</span>
+<span class="text-sm text-slate-500 font-medium pr-4">Ultima Ejecución: {{ FECHA_ACTUAL }}</span>
+</div>
+</div>
+</section>
+<!-- Metric Hero Cards -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl border-b-4 border-primary/20 shadow-sm transition-all hover:shadow-md">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-primary-fixed rounded-lg text-primary material-symbols-outlined">analytics</span>
+</div>
+<p class="text-sm font-medium text-on-surface-variant mb-1">Total Tests</p>
+<h3 class="text-4xl font-black font-headline text-on-surface tracking-tighter">{{ TOTAL_TESTS }}</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-b-4 border-tertiary-container/40 shadow-sm transition-all hover:shadow-md">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-tertiary-fixed rounded-lg text-tertiary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs font-bold text-tertiary">{{ PASS_RATE }}% Rate</span>
+</div>
+<p class="text-sm font-medium text-on-surface-variant mb-1">Passed</p>
+<h3 class="text-4xl font-black font-headline text-on-surface tracking-tighter">{{ PASSED_TESTS }}</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-b-4 border-error/20 shadow-sm transition-all hover:shadow-md">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-error-container rounded-lg text-error material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</div>
+<p class="text-sm font-medium text-on-surface-variant mb-1">Failed</p>
+<h3 class="text-4xl font-black font-headline text-on-surface tracking-tighter">{{ FAILED_TESTS }}</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-b-4 border-secondary-container/40 shadow-sm transition-all hover:shadow-md">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-secondary-fixed rounded-lg text-on-secondary-container material-symbols-outlined">block</span>
+</div>
+<p class="text-sm font-medium text-on-surface-variant mb-1">Skipped</p>
+<h3 class="text-4xl font-black font-headline text-on-surface tracking-tighter">{{ SKIPPED_TESTS }}</h3>
+</div>
+</section>
+
+<!-- Table Section -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden">
+<div class="p-6 border-b border-outline-variant/10 flex justify-between items-center bg-blue-50/20">
+<div>
+<h4 class="text-lg font-bold font-headline text-blue-900">Recent Selenium Test Runs</h4>
+<p class="text-xs text-on-surface-variant mt-1">Detailed log of automated executions generated dynamically</p>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">
+<tr>
+<th class="px-6 py-4">Test Feature</th>
+<th class="px-6 py-4">Suite Name</th>
+<th class="px-6 py-4">Environment</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Duration</th>
+<th class="px-6 py-4">Worker</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-outline-variant/10">
+{{ TEST_ROWS }}
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Footer Decoration -->
+<footer class="p-8 text-center text-on-surface-variant/40 text-xs font-semibold">
+            © 2026 Clinical Authority Systems. Technical precision through automated intelligence.
+        </footer>
+</main>
+</body></html>

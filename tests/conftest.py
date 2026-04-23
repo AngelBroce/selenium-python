@@ -3,6 +3,11 @@ from selenium import webdriver
 import os
 from datetime import datetime
 
+report_dir = os.path.join(os.path.dirname(__file__), "..", "reports")
+os.makedirs(report_dir, exist_ok=True)
+
+report_path = os.path.join(report_dir, "clinical_authority_report.html")
+
 # Global array to hold test execution metrics in memory
 test_results = []
 

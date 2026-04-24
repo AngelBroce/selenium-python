@@ -36,7 +36,11 @@ public class RobustTest {
         // Crea una entrada para cada prueba individual
         test = extent.createTest(testInfo.getDisplayName());
 
-        // ... inicialización de tu driver (ChromeOptions, etc)
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage");
+        driver = new ChromeDriver(options);
+        
         test.info("Navegador inicializado");
     }
 
@@ -49,7 +53,9 @@ public class RobustTest {
 
     @AfterEach
     public void tearDown() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     @AfterAll

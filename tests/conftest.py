@@ -21,8 +21,6 @@ def driver():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=options)
-    
-    driver = webdriver.Chrome()
     driver.maximize_window()
     yield driver
     driver.quit()

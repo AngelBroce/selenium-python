@@ -1,10 +1,11 @@
+# Prueba de java
 name: Pruebas de Java con Maven
 
 on:
   push:
-    branches: ["main", "master"]
+    branches: ["master"]
   pull_request:
-    branches: ["main", "master"]
+    branches: ["master"]
 
 jobs:
   test:
@@ -35,3 +36,5 @@ jobs:
           path: |
             Lab2Java/target/ExtentReport.html
             Lab2Java/target/surefire-reports/**/*
+
+            # funciona porfavor, te quiero mucho

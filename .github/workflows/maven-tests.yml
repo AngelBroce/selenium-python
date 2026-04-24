@@ -1,0 +1,37 @@
+name: Pruebas de Java con Maven
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Lab2Java
+    steps:
+      - name: Descargar codigo fuente
+        uses: actions/checkout@v4
+
+      - name: Configurar Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+          cache-dependency-path: Lab2Java/pom.xml
+
+      - name: Ejecutar pruebas unitarias
+        run: mvn -B clean test
+
+      - name: Guardar reportes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reportes-java
+          path: |
+            Lab2Java/target/ExtentReport.html
+            Lab2Java/target/surefire-reports/**/*
